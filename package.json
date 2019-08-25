@@ -1,6 +1,6 @@
 {
   "name": "@scbd/self-embed-vue-component",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
   "contributors": [
     {
@@ -8,9 +8,9 @@
       "email": "randy.houlahan@un.org"
     }
   ],
-  "main": "dist/lib/SelfEmbedVueComponent.umd.min.js",
-  "browser": "dist/lib/SelfEmbedVueComponent.umd.min.js",
-  "unpkg": "dist/lib/SelfEmbedVueComponent.umd.min.js",
+  "main": "dist/SelfEmbedVueComponent.umd.min.js",
+  "browser": "dist/SelfEmbedVueComponent.umd.min.js",
+  "unpkg": "dist/SelfEmbedVueComponent.umd.min.js",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve --open dev/main.js",
