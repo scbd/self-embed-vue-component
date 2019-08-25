@@ -1,0 +1,50 @@
+{
+  "name": "@scbd/self-embed-vue-component",
+  "version": "1.0.0",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "contributors": [
+    {
+      "name": "Randy J. Houlahan",
+      "email": "randy.houlahan@un.org"
+    }
+  ],
+  "main": "dist/lib/SelfEmbedVueComponent.umd.min.js",
+  "browser": "dist/lib/SelfEmbedVueComponent.umd.min.js",
+  "unpkg": "dist/lib/SelfEmbedVueComponent.umd.min.js",
+  "private": false,
+  "scripts": {
+    "serve": "vue-cli-service serve --open dev/main.js",
+    "build": "vue-cli-service build --target lib --name SelfEmbedVueComponent --dest dist src/index.js && cp -r src dist/src",
+    "build:dev:widget": "vue-cli-service build  --mode production --target lib --formats umd-min --name actionListEmbed --dest public/build dev/widget.js",
+    "lint": "vue-cli-service lint",
+    "lint:fix": "vue-cli-service lint --fix",
+    "release": "yarn publish --access=public"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "babel-eslint": "^10.0.1",
+    "bootstrap": "^4.3.1",
+    "core-js": "^2.6.5",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "release": {
+    "publishDir": "dist"
+  },
+  "devEngines": {
+    "node": "8.x || 9.x || 10.x || 11.x || 12.x"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scbd/self-embed-vue-component.git"
+  }
+}
