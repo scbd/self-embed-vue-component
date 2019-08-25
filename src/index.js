@@ -39,7 +39,7 @@ function setDefaults(){
   const propsData          = {}
   const scriptDependancies = []
   const cssDependancies    = []
-  const selfId             = 'EmbedComponent'
+  const selfID             = 'EmbedComponent'
   const appID              = 'appID'
   const i18n               = {
     locale        : process.env.VUE_APP_I18N_LOCALE || 'en',
@@ -47,7 +47,7 @@ function setDefaults(){
     messages      : { en: {} }
   }
 
-  return { propsData, scriptDependancies, cssDependancies, i18n, selfId, appID }
+  return { propsData, scriptDependancies, cssDependancies, i18n, selfID, appID }
 }
 
 function getI18n(){
