@@ -1,1 +1,1 @@
-self-embed-vue-component
+# Self Embedding Component
