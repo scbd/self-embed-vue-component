@@ -21,6 +21,7 @@
     "release": "yarn publish --access=public --tag latest",
     "clean-reinstall": "rm -f yarn.lock rm -f package-lock.json && rm -rf node_modules && CXXFLAGS=\"--std=c++17\" yarn install --force"
   },
+  "main": "dist/index.min.js",
   "exports": {
     ".": [
       {
