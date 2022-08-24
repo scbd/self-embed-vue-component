@@ -1,6 +1,6 @@
 {
   "name": "@scbd/self-embedding-component",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "A wrapper script to self load a vue component from a cdn with a single source.",
   "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
   "contributors": [
