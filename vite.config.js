@@ -45,8 +45,8 @@ export default defineConfig({
                                 fileName : (format) => (format === 'es')? `index.min.js` : `${format}/index.min.js`
                               }, 
                   // lib build as opposed to app build
-                  external: [ 'json5', 'camel-case', 'param-case', 'pascal-case' ],
                   rollupOptions: {
+                    external: [ 'json5' ],
                     // make sure to externalize deps that shouldn't be bundled
                     // into your library
                     output: {
@@ -54,7 +54,7 @@ export default defineConfig({
                       exports: 'named',
                       // Provide global variables to use in the UMD build
                       // for externalized deps
-                      globals: { JSON5: 'json5', camelCase: 'camel-case', paramCase: 'param-case', pascalCase: 'pascal-case',}
+                      globals: { JSON5: 'json5'}
                     },
                     plugins: [terser()]
                   }

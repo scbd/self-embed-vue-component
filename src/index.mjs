@@ -1,13 +1,13 @@
-import { setPkg, getWidgetElementId, getCssUrl, getWidgetMountUrl, getEsShimsUrl, getImportMapUrl } from './util.mjs'
-import   JSON5       from 'json5'
-import { camelCase } from 'camel-case'
+import { camelCase, setPkg, getWidgetElementId, getCssUrl, getWidgetMountUrl, getEsShimsUrl, getImportMapUrl } from './util.mjs'
+import   JSON5       from 'json5' //https://cdn.jsdelivr.net/npm/json5@2.2.0/dist/index.min.mjs
+// import { camelCase } from 'camel-case'
 
 export default class {
 
-  constructor(options = {}, buildTestWidget = false){
+  constructor(options = {},  widgetOptions = {}){
     window.esmsInitOptions = { shimMode: true }
 
-    this.initGlobalVars(options, buildTestWidget)
+    this.initGlobalVars(options, widgetOptions)
     this.initElements()
     this.loadEsShim()
     this.attrsAsOptions()
@@ -16,13 +16,13 @@ export default class {
     this.loadWidgetMount()
   }
 
-  initGlobalVars({ Package, css, cssDefaultUrl, esShimCdnUrl, importMapUrl, scriptElementId, widgetMountUrl, widgetElementId }, buildTestWidget){
+  initGlobalVars({ Package, css, cssDefaultUrl, esShimCdnUrl, importMapUrl, scriptElementId, widgetMountUrl, widgetElementId }, widgetOptions){
 
-    this.pkg              = setPkg(Package, buildTestWidget)
-    this.esShimCdnUrl     = esShimCdnUrl     || getEsShimsUrl(this.pkg)
-    this.cssDefaultUrl    = cssDefaultUrl || getCssUrl(this.pkg)
+    this.pkg              = setPkg(Package, widgetOptions)
+    this.esShimCdnUrl     = esShimCdnUrl    || getEsShimsUrl(this.pkg)
+    this.cssDefaultUrl    = cssDefaultUrl   || getCssUrl(this.pkg)
     this.css              = Array.isArray(css)? [ ...css, this.cssDefaultUrl ] : [ this.cssDefaultUrl ]
-    this.importMapUrl     = importMapUrl  || getImportMapUrl(this.pkg)
+    this.importMapUrl     = importMapUrl    || getImportMapUrl(this.pkg)
     this.scriptElementId  = scriptElementId || this.pkg.pkgName
     this.widgetMountUrl   = widgetMountUrl  || getWidgetMountUrl(this.pkg)
     this.widgetElementId  = widgetElementId || getWidgetElementId(this.pkg)
@@ -123,14 +123,14 @@ export default class {
     if (!this.selfElement.hasAttributes()) return undefined
 
     const attrs = this.selfElement.attributes
-    const props = {}
+    const props = { options: {} }
 
     for (const { name, value } of attrs){
       if([ 'id', 'src', 'type' ].includes(name)) continue
 
       if(name === 'options' && isJson(value))
         for (const [ optName, optValue ] of Object.entries(toJson(value)))
-          if(optValue) props[optName] = optValue
+          if(optValue) props.options[optName] = optValue
 
       if(name !== 'options') props[camelCase(name)] = value
     }

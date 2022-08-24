@@ -1,5 +1,3 @@
-import { paramCase  } from 'param-case'
-import { pascalCase } from 'pascal-case'
 
 const cdnUrl = 'https://cdn.cbd.int'
 
@@ -10,14 +8,15 @@ const testWidgetMap = {
     widgetUrl      : 'http://localhost:5000/preview/widget/index.js'
 }
 
-export const setPkg = (rawPackage, { buildTestWidget, buildTestWidgetMount } ) => {
+export const setPkg = (rawPackage, { buildWidgetTest, buildWidget, buildWidgetMount } ) => {
   const pkg = {}
 
-  pkg.scopeLessName        = rawPackage.name.replace(new RegExp('@|/', 'i'), '')
+  pkg.scopeLessName        = (rawPackage.name.replace(new RegExp('@|/', 'i'), '')).replace('/','-')
   pkg.pascalPkgName        = pascalCase(pkg.scopeLessName)
   pkg.pkgName              = paramCase(pkg.scopeLessName)
-  pkg.buildTestWidget      = buildTestWidget
-  pkg.buildTestWidgetMount = buildTestWidgetMount
+  pkg.buildWidgetTest      = buildWidgetTest
+  pkg.buildWidget          = buildWidget
+  pkg.buildWidgetMount     = buildWidgetMount
 
   for (const key in rawPackage)
     pkg[key] = rawPackage[key]
@@ -35,19 +34,19 @@ export function getEsShimsUrl(pkg){
 
 
 export const getCssUrl = (pkg) => {
-  const { name, buildTestWidget } = pkg
+  const { name, buildWidgetTest, version } = pkg
 
-  if(buildTestWidget) return testWidgetMap['cssDefaultUrl']
+  if(buildWidgetTest) return testWidgetMap['cssDefaultUrl']
 
-  return `${cdnUrl}/${name}/dist/style.css`
+  return `${cdnUrl}/${name}@${version || 'latest'}/dist/style.css`
 }
 
 export const getWidgetMountUrl = (pkg) => {
-  const { name, buildTestWidget } = pkg
+  const { name, buildWidgetTest, version } = pkg
 
-  if(buildTestWidget) return testWidgetMap['widgetMountUrl']
+  if(buildWidgetTest) return testWidgetMap['widgetMountUrl']
 
-  return `${cdnUrl}/${name}/dist/widget/mount.js`
+  return `${cdnUrl}/${name}@${version || 'latest'}/dist/widget/mount.js`
 }
 
 export const getWidgetElementId = (pkg) => {
@@ -57,10 +56,29 @@ export const getWidgetElementId = (pkg) => {
 }
 
 export const getImportMapUrl = (pkg) => {
-  const { name, buildTestWidget } = pkg
+  const { name, buildWidgetTest, version } = pkg
 
-  if(buildTestWidget) return testWidgetMap['importMapUrl']
+  if(buildWidgetTest) return testWidgetMap['importMapUrl']
 
-  return `${cdnUrl}/${name}/dist/import-map.json`
+  return `${cdnUrl}/${name}@${version || 'latest'}/dist/import-map.json`
 }
 
+
+export function camelCase(string) {
+  return string.toLowerCase().trim().split(/[.\-_\s]/g).reduce((string, word) => string + word[0].toUpperCase() + word.slice(1));
+}
+
+export function pascalCase(string) {
+  const cameledString = camelCase(string)
+
+  return `${cameledString[0].toLowerCase()}${cameledString.substring(1)}`
+}
+
+function paramCase(str, sep = '-') {
+  return str
+    .replace(/[A-Z]/g, (letter, index) => {
+      const lcLet = letter.toLowerCase();
+      return index ? sep + lcLet : lcLet;
+    })
+    .replace(/([-_ ]){1,}/g, sep)
+}
