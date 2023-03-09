@@ -1,6 +1,6 @@
 {
   "name": "@scbd/self-embedding-component",
-  "version": "3.0.9",
+  "version": "3.1.0",
   "description": "A wrapper script to self load a vue component from a cdn with a single source.",
   "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
   "contributors": [
@@ -9,7 +9,7 @@
   "homepage": "https://github.com/scbd/self-embedding-component/blob/master/README.md",
   "readme": "https://github.com/scbd/self-embedding-component/blob/master/README.md",
   "repository": "https://github.com/scbd/self-embedding-component",
-  "cdn": "https://cdn.cbd.int/scbd/self-embedding-component",
+  "cdn": "https://cdn.jsdelivr.net/npm/@scbd/self-embedding-component",
   "license": "MIT",
   "private": false,
   "files": [
@@ -39,9 +39,9 @@
   "devDependencies": {
     "consola": "2.15.3",
     "rollup-plugin-terser": "7.0.2",
-    "vite": "2.7.13"
+    "vite": "4.1.4"
   },
   "dependencies": {
-    "json5": "2.2.1"
+    "json5": "2.2.3"
   }
 }

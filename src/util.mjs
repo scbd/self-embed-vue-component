@@ -1,5 +1,5 @@
 
-const cdnUrl = 'https://cdn.cbd.int'
+const defaultCdnUrl = 'https://cdn.jsdelivr.net/npm'
 
 const testWidgetMap = {
     cssDefaultUrl  : 'http://localhost:5000/style.css'                     ,
@@ -27,26 +27,30 @@ export const setPkg = (rawPackage, { buildWidgetTest, buildWidget, buildWidgetMo
 export function getEsShimsUrl(pkg){
 
   const { dependencies } = pkg
-  const   version        = dependencies['es-module-shims'] || '1.4.4'
+  const   version        = dependencies['es-module-shims'] || '1.6.3'
 
   return `https://cdn.jsdelivr.net/npm/es-module-shims@${version}/dist/es-module-shims.js`
 }
 
 
-export const getCssUrl = (pkg) => {
+export const getCssUrl = (pkg, { cdnUrl = defaultCdnUrl }) => {
   const { name, buildWidgetTest, version } = pkg
 
   if(buildWidgetTest) return testWidgetMap['cssDefaultUrl']
+  
+  const cdnPreFix = formCdnPrefix({ cdnUrl, name, version })
 
-  return `${cdnUrl}/${name}@${version || 'latest'}/dist/style.css`
+  return `${cdnPreFix}/dist/es/style.css`
 }
 
-export const getWidgetMountUrl = (pkg) => {
+export const getWidgetMountUrl = (pkg, { cdnUrl = defaultCdnUrl }) => {
   const { name, buildWidgetTest, version } = pkg
 
   if(buildWidgetTest) return testWidgetMap['widgetMountUrl']
 
-  return `${cdnUrl}/${name}@${version || 'latest'}/dist/widget/mount.js`
+  const cdnPreFix = formCdnPrefix({ cdnUrl, name, version })
+
+  return `${cdnPreFix}/dist/widget/mount.js`
 }
 
 export const getWidgetElementId = (pkg) => {
@@ -55,12 +59,14 @@ export const getWidgetElementId = (pkg) => {
   return `widget-${pkgName}`
 }
 
-export const getImportMapUrl = (pkg) => {
+export const getImportMapUrl = (pkg, { cdnUrl = defaultCdnUrl }) => {
   const { name, buildWidgetTest, version } = pkg
 
   if(buildWidgetTest) return testWidgetMap['importMapUrl']
 
-  return `${cdnUrl}/${name}@${version || 'latest'}/dist/import-map.json`
+  const cdnPreFix = formCdnPrefix({ cdnUrl, name, version })
+
+  return `${cdnPreFix}/dist/import-map.json`
 }
 
 
@@ -81,4 +87,16 @@ function paramCase(str, sep = '-') {
       return index ? sep + lcLet : lcLet;
     })
     .replace(/([-_ ]){1,}/g, sep)
+}
+
+function isS3(cdnUri){
+  return cdnUri.includes('s3.amazonaws.com')
+}
+
+function s3UriCleaning(uri){
+  return uri.replaceAll('@', '%40')
+}
+
+function formCdnPrefix({ cdnUrl, name, version }){
+  return isS3(cdnUrl)? s3UriCleaning(`${cdnUrl}/${name}@${version || 'latest'}`) : `${cdnUrl}/${name}@${version || 'latest'}`
 }

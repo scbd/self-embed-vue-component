@@ -37,7 +37,7 @@ const banner = `
 export default defineConfig({
     logLevel : 'info',
     build    : {
-                  emptyOutDir: true, minify: false, sourcemap: false,
+                  emptyOutDir: true, minify: true, sourcemap: false,
                   lib      : { 
                                 formats  : ['es', 'umd', 'cjs'],
                                 entry    : 'src/index.mjs',
@@ -56,7 +56,7 @@ export default defineConfig({
                       // for externalized deps
                       globals: { JSON5: 'json5'}
                     },
-                    plugins: [terser()]
+                    // plugins: [terser()]
                   }
                 }
   })
