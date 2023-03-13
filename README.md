@@ -5,7 +5,7 @@ To use this library in order to create a self embedding Vue3 component, 2 files 
 This library is dependant on 
 [js import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) in conjunction with [es-module-shims](https://www.npmjs.com/package/es-module-shims).   [es-module-shims](https://www.npmjs.com/package/es-module-shims) polyfills for old browsers and add the additional functionality of multiple external [js import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) per page.
 
-You must build the widget and widget-mount separately. [@scbd/dist-builder](https://www.npmjs.com/package/@scbd/dist-builder) will automagically build the component and widget required files.
+You must build the widget and widget-mount separately. [@scbd/dist-builder](https://github.com/scbd/dist-builder) will automagically build the component and widget required files.
 
 # widget.js
 
